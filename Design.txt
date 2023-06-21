@@ -1,0 +1,29 @@
+Design:
+
+Indexer Class-
+
+Properties:
+excludeWords (Set<String>): A set of words that should be excluded from indexing.
+wordIndex (Map<String, Set<Integer>>): A map to store words and the corresponding page numbers.
+
+Methods:
+public void readExcludedWords(String excludedWords) throws IOException: Reads and initializes the words that need to be excluded from indexing.
+public void buildIndex(String[] pages) throws IOException: Reads and initializes the contents of the pages, building the word index.
+public void writeIndex(String index) throws IOException: Stores the words and their page numbers in the index file.
+
+Constructor:
+public Indexer(): Initializes the excludeWords set and the wordIndex map.
+
+Test Class-
+
+Methods:
+public static void main(String[] args): The entry point of the program. It sets up the input files, creates an instance of the Indexer class, and calls the necessary methods to perform the indexing.
+
+Overview:
+The provided code consists of two classes: Indexer and Test. The Indexer class handles the indexing functionality, while the Test class serves as the entry point of the program. Here's a breakdown of the design:
+
+1.The Indexer class maintains a set of excluded words (excludeWords) and a map of words and their corresponding page numbers (wordIndex).
+2.It alsi provides methods to read and initialize the excluded words, build the word index by reading and processing the contents of the pages, and write the index to a file.
+3.It is constructed using the default constructor, which initializes the excludeWords set and the wordIndex map.
+4.The Test class contains the main method, which sets up the input files, creates an instance of the Indexer class, and calls the necessary methods (readExcludedWords, buildIndex, and writeIndex) to perform the indexing process.
+5.Exception handling is implemented to catch any potential errors that may occur during the indexing process.

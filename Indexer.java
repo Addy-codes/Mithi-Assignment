@@ -10,6 +10,7 @@ class Indexer {
         wordIndex = new TreeMap<>();
     }
 
+    // to read and initialise words that have to be excluded
     public void readExcludedWords(String excludedWords) throws IOException {
         FileReader fr = new FileReader(excludedWords);
         BufferedReader br = new BufferedReader(fr);
@@ -21,6 +22,7 @@ class Indexer {
         fr.close();
     }
 
+    // to read and initialise the contents of the pages
     public void buildIndex(String[] pages) throws IOException {
         for (int i = 0; i < pages.length; i++) {
             String currentPage = pages[i];
@@ -28,7 +30,7 @@ class Indexer {
             BufferedReader br = new BufferedReader(fr);
             String line;
             while ((line = br.readLine()) != null) {
-                String words[] = line.split("\\s+");
+                String words[] = line.split("\\s+");// to split the line wherever any kind of space is encountered
                 for (String word : words) {
                     word = word.toLowerCase();
                     if (!excludeWords.contains(word)) {
@@ -43,6 +45,7 @@ class Indexer {
         }
     }
 
+    // to store words and their page numbers in the index file
     public void writeIndex(String index) throws IOException {
         FileWriter fw = new FileWriter(index, false);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -51,17 +54,16 @@ class Indexer {
                 "-------------------");
         for (Map.Entry<String, Set<Integer>> entry : wordIndex.entrySet()) {
             String word = entry.getKey();
-            // System.out.println(word);
-            if (word.startsWith("\u00E2")) {
-            }
             if (!word.matches("[a-z]+")) {
-                if (!word.startsWith("\u00E2")) {
+                if (!word.startsWith("\u00E2")) // to include the last three items that were present in the original
+                                                // index.txt file
+                {
                     continue;
                 }
             }
             Set<Integer> pages = entry.getValue();
             pw.print(word + " : ");
-            boolean isFirstPage = true;
+            boolean isFirstPage = true;// to add "," whenever the word is present in multiple pages
             for (int page : pages) {
                 if (!isFirstPage) {
                     pw.print(", ");
@@ -73,6 +75,6 @@ class Indexer {
         }
         pw.close();
         bw.close();
-        pw.close();
+        fw.close();
     }
 }
